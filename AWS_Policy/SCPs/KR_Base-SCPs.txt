@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyRamShareOutsideOrgz",
+      "Effect": "Deny",
+      "Action": [
+        "ram:CreateResourceShare",
+        "ram:UpdateResourceShare",
+        "ram:AssociateResourceShare"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "ram:RequestedAllowsExternalPrincipals": "true"
+        }
+      }
+    },
+    {
+      "Sid": "DenyLeaveOrgz",
+      "Effect": "Deny",
+      "Action": [
+        "organizations:LeaveOrganization"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalARN": "arn:aws:iam::*:role/AWSControlTowerExecution"
+        }
+      }
+    },
+    {
+      "Sid": "DenyEc2Connection",
+      "Effect": "Deny",
+      "Action": [
+        "ec2-instance-connect:SendSSHPublicKey",
+        "cloudshell:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

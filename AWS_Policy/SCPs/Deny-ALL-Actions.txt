@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyAllActionsExceptSupportAndAssumeRole",
+      "Effect": "Deny",
+      "NotAction": [
+        "support:*",
+        "sts:AssumeRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyAssumeRoleIfNotFromPayerAccount",
+      "Effect": "Deny",
+      "Action": "sts:AssumeRole",
+      "Resource": "arn:aws:iam::*:role/AWSControlTowerExecution",
+      "Condition": {
+        "StringNotLike": {
+          "aws:PrincipalArn": "arn:aws:iam::{AWS Managed Account}:*"
+        }
+      }
+    }
+  ]
+}
