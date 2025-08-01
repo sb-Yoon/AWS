@@ -1,0 +1,24 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowedIPForSSOAndIAMUsers",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "NotIpAddress": {
+          "aws:SourceIp": [
+            "{IP Address}"
+          ]
+        },
+        "ArnLike": {
+          "aws:PrincipalARN": [
+            "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_*",
+            "arn:aws:iam::*:user/*"
+          ]
+        }
+      }
+    }
+  ]
+}
