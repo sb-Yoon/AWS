@@ -28,8 +28,8 @@ Resources:
               StringLike:
                 "aws:PrincipalArn": 
                   - "arn:aws:iam::*:user/*"
-						      - "arn:aws:sts::*:assumed-role/AWSReservedSSO_*/*"
-				      		- "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_*"
+                  - "arn:aws:sts::*:assumed-role/AWSReservedSSO_*/*"
+                  - "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_*"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/PowerUserAccess
         
