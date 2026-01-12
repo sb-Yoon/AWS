@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  OrganizationId:
+    Type: String
+    Description: AWS Organization ID
+    Default: "o-xxxxxxxxxx"
+
+Resources:
+  TerraformRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: TerraformRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: "*"
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                "aws:PrincipalOrgID": !Ref OrganizationId
+          - Effect: Deny
+            Principal:
+              AWS: "*"
+            Action: sts:AssumeRole
+            Condition:
+              StringLike:
+                "aws:PrincipalArn": 
+                  - "arn:aws:iam::*:user/*"
+						      - "arn:aws:sts::*:assumed-role/AWSReservedSSO_*/*"
+				      		- "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_*"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/PowerUserAccess
+        
